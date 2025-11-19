@@ -5,6 +5,7 @@ SIGS = {
     "jpg": (b"\xff\xd8\xff", b"\xff\xd9"),
     "png": (b"\x89PNG\r\n\x1a\n", b"IEND"),
     "pdf": (b"%PDF", b"%%EOF"),
+    "gif": (b"GIF89a", b"\x3B"),
 }
 
 def carve(data: bytes, outdir: str):
@@ -23,7 +24,7 @@ def carve(data: bytes, outdir: str):
                 continue
 
             # Trailer-Ende grob anpassen
-            if ext == "jpg":
+            if ext in ("jpg", "gif"):
                 end = j + len(tail)
             elif ext == "png":
                 # rudimentär: IEND + 8 Bytes (Länge+CRC)
